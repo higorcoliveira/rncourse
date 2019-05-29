@@ -1,45 +1,39 @@
-import React, { Component } from 'react';
-import { StyleSheet, Text, View, TextInput } from 'react-native';
+import React, { Component } from 'react'
+import { StyleSheet, View } from 'react-native'
+import PlaceList from './src/components/PlaceList'
+import PlaceInput from './src/components/PlaceInput'
 
 export default class App extends Component {
   state = {
-    placeName: ''
+    places: []
   }
 
-  placeNameChangeHandler = value => {
-    this.setState({
-      placeName: value
+  placeSubmitHandler = placeName => {
+    this.setState(prevState => {
+      return {
+        places: prevState.places.concat(placeName)
+      }
     })
   }
 
   render() {
+    const { places } = this.state
+
     return (
       <View style={styles.container}>
-        <TextInput
-            style={{width: 300, borderColor: "black", borderWidth: 1}}  
-            value={this.state.placeName} 
-            onChangeText={this.placeNameChangeHandler} 
-        />
+        <PlaceInput onAddPlace={this.placeSubmitHandler} />
+        <PlaceList places={places} />
       </View>
-    );
+    )
   }
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});
+    padding: 26,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "flex-start"
+  }
+})
